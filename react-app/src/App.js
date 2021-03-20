@@ -1,5 +1,5 @@
 import React from 'react';
-import CarList from './Components/carlist.js'; 
+import CarList from './Components/carlist'; 
 import { NewValetCar } from './Components/newcarform'; 
 import {Apicalls} from './rest/api'; 
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
@@ -16,13 +16,39 @@ export default class App extends React.Component {
     this.addNewCar = this.addNewCar.bind(this); 
   }
 
+  render(){
+    let guestCard = this.state.guest.map(car => {
+      return <CarList {...car} key={car._id}
+      deleteCar={this.deleteCar} 
+      updateCar={this.updateCar}/>
+    })
+
+    return(
+      <div className="Container">
+      <div >
+        <h2 className="text-center">React valet app!</h2>
+        <NewValetCar addNewCar={this.addNewCar}/>
+      </div>
+      <br></br>
+      <div>
+        <h2 className="text-center">Current Valet Cars</h2>
+        {guestCard}
+      </div>
+      </div>
+    )
+  }
+
+  componentDidMount() {
+    this.getdata();
+  }
   getdata = async()=>{
-    const data = await Apicalls.get(); 
-    this.setState({data})
+    const d = await Apicalls.get(); 
+    this.setState({guest: d})
     console.log(this.state)
   }; 
 
   deleteCar = async(id)=>{
+    console.log(id)
     await Apicalls.delete(id); 
     this.getdata(); 
   }; 
@@ -30,26 +56,6 @@ export default class App extends React.Component {
   addNewCar = async(car)=>{
     await Apicalls.create(car); 
     this.getdata(); 
-  }
-
-  render(){
-    let guestCard = this.state.guest.map(car => {
-      return <CarList {...car} key={car._id}
-      deleteCar={this.deleteCar} />
-    })
-
-    return(
-      <div>
-      <div className="Container">
-        <h2>add Guest</h2>
-        <NewValetCar addNewCar={this.addNewCar}/>
-      </div>
-      <div>
-        <h2>Guest</h2>
-        {guestCard}
-      </div>
-      </div>
-    )
   }
 
 }

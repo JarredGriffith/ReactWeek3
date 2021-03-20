@@ -6,7 +6,7 @@ export const NewValetCar = (props)=> {
     const [carMake, setCarMake] = useState('');
 
     const handleSubmit = (e)=> {
-        props.addNewCar({guestNAme,carMake}); 
+        props.updateCar({guestNAme,carMake}); 
         e.preventDefault(); 
     }
 
@@ -14,8 +14,8 @@ return (
     <form onSubmit={handleSubmit} className="container border border-dar p-3 mb-2 bg-secondary text-white">
         <div className="container">
         <div>
-            <label>Guest Name</label>
-            <input type="text" placeholder="Name" value={guestNAme} className="form-control" onChange={(e)=> setName(e.target.value)}/>
+            <label>Car Owner Name</label>
+            <input type="text" placeholder="Name" value={this.props.} className="form-control" onChange={(e)=> setName(e.target.value)}/>
         </div>
         <div>
             <label>Car make</label>

@@ -16,9 +16,8 @@ class APIcalls {
     put = async(car) => {
         try{
             let updatewithoutId = {
-                name: car.name, 
-                make: car.make, 
-                ticket: car.ticket
+                name: car.guestNAme, 
+                make: car.carMake, 
             }
             const resp = await fetch(`${ENDPOINT}/${car.id}`,{
                 method: 'PUT', 
@@ -41,9 +40,7 @@ class APIcalls {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    car
-                })
+                body: JSON.stringify(car)
             }); 
             return resp; 
         } catch(e) {
